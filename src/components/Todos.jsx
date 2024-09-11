@@ -1,14 +1,22 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeTodo } from '../features/Todo/todoSlice';
+
 
 const Todos = () => {
+   const dispatch = useDispatch();
+   const todos = useSelector((state) => state.todos);
+
    return (
       <div className="w-full max-w-lg mx-auto mt-6">
-         {/* <ul className="space-y-4">
-            <li className="flex justify-between items-center bg-white p-4 rounded-lg shadow-md">
-               <span className="text-gray-800">Sample Todo Item</span>
-               <span className="text-blue-500 cursor-pointer">Mark Complete</span>
-            </li>
-         </ul> */}
+         {
+            todos.map((todo) => (
+               <div key={todo.id} className="flex items-center justify-between p-4 bg-transparent border border-gray-200 rounded-lg mt-4 text-red-50">
+                  <p>{todo.text}</p>
+                  <button onClick={() => dispatch(removeTodo(todo.id))} className="text-red-500 font-semibold">Delete</button>
+               </div>
+            ))
+         }
       </div>
    );
 };
